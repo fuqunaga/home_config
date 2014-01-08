@@ -4,15 +4,22 @@
 set nocompatible               " be iMproved
 filetype off                   " required!
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+if has('vim_starting')
+	set nocompatible               " Be iMproved
+	set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
 
-Bundle 'git://github.com/gmarik/vundle'
-Bundle 'git://github.com/Shougo/unite.vim'
-Bundle 'git://github.com/Shougo/neocomplcache'
-Bundle 'git://github.com/tpope/vim-surround'
+call neobundle#rc(expand('~/.vim/bundle/'))
+
+ " Let NeoBundle manage NeoBundle
+NeoBundleFetch 'Shougo/neobundle.vim'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'tpope/vim-surround'
 
 filetype plugin indent on     " required! 
+
+NeoBundleCheck
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -143,7 +150,7 @@ endfunc
 "-------------------------------------------------------------------------------
 set wildmenu               " コマンド補完を強化
 set wildchar=<tab>         " コマンド補完を開始するキー
-set wildmode=list:full     " リスト表示，最長マッチ
+set wildmode=list:longest  " リスト表示，最長マッチ
 set history=1000           " コマンド・検索パターンの履歴数
 set complete+=k            " 補完に辞書ファイル追加
 
