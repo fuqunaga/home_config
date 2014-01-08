@@ -8,19 +8,16 @@ endif
 
 call neobundle#rc(expand('~/.vim/bundle/'))
 
-" Let NeoBundle manage NeoBundle
+ " Let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim'
-
-" Recommended to install
-" After install, turn shell ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
-NeoBundle 'Shougo/vimproc'
-
-NeoBundle 'git://github.com/Shougo/unite.vim'
-NeoBundle 'git://github.com/Shougo/neocomplcache'
-NeoBundle 'git://github.com/tpope/vim-surround'
-NeoBundle 'scrooloose/nerdcommenter'
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'vim-scripts/actionscript.vim--Leider'
 
 filetype plugin indent on     " required! 
+
+NeoBundleCheck
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -45,8 +42,6 @@ function! s:unite_my_settings()
   imap <silent><buffer> <ESC><ESC> <ESC>q
 endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
 " neocomplcache
 let g:neocomplcache_enable_at_startup = 1 " 起動時に有効化
 
@@ -57,7 +52,6 @@ set nu
 " 文字を回り込ませない
 set nowrap
 
-
 set tabstop=4
 set shiftwidth=4
 " set hid
@@ -65,10 +59,14 @@ set shiftwidth=4
 "コメント行で改行すると次の行の先頭に自動的にコメント記号が入らないように
 "set formatoptions-=ro
 
+set clipboard=unnamed,autoselect
 
 " QuickFix
 noremap <F10> :cn<CR>
 noremap <F11> :cp<CR>
+
+" filetype
+au BufNewFile,BufRead *.as set filetype=actionscript
 
 
 " for Xcode
@@ -151,7 +149,7 @@ endfunc
 "-------------------------------------------------------------------------------
 set wildmenu               " コマンド補完を強化
 set wildchar=<tab>         " コマンド補完を開始するキー
-set wildmode=list:full     " リスト表示，最長マッチ
+set wildmode=list:longest  " リスト表示，最長マッチ
 set history=1000           " コマンド・検索パターンの履歴数
 set complete+=k            " 補完に辞書ファイル追加
 
