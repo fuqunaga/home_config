@@ -16,6 +16,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'tpope/vim-surround'
+NeoBundle 'vim-scripts/actionscript.vim--Leider'
 
 filetype plugin indent on     " required! 
 
@@ -44,8 +45,6 @@ function! s:unite_my_settings()
   imap <silent><buffer> <ESC><ESC> <ESC>q
 endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-
 " neocomplcache
 let g:neocomplcache_enable_at_startup = 1 " 起動時に有効化
 
@@ -56,7 +55,6 @@ set nu
 " 文字を回り込ませない
 set nowrap
 
-
 set tabstop=4
 set shiftwidth=4
 " set hid
@@ -64,10 +62,14 @@ set shiftwidth=4
 "コメント行で改行すると次の行の先頭に自動的にコメント記号が入らないように
 "set formatoptions-=ro
 
+set clipboard=unnamed,autoselect
 
 " QuickFix
 noremap <F10> :cn<CR>
 noremap <F11> :cp<CR>
+
+" filetype
+au BufNewFile,BufRead *.as set filetype=actionscript
 
 
 " for Xcode
@@ -173,4 +175,5 @@ function! InsertTabWrapper()
 	endif
 endfunction
 inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+
 
