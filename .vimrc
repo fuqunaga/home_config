@@ -1,16 +1,24 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " for Vundle
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set nocompatible               " be iMproved
-filetype off                   " required!
+if has('vim_starting')
+   set nocompatible               " Be iMproved
+   set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+call neobundle#rc(expand('~/.vim/bundle/'))
 
-Bundle 'git://github.com/gmarik/vundle'
-Bundle 'git://github.com/Shougo/unite.vim'
-Bundle 'git://github.com/Shougo/neocomplcache'
-Bundle 'git://github.com/tpope/vim-surround'
+" Let NeoBundle manage NeoBundle
+NeoBundleFetch 'Shougo/neobundle.vim'
+
+" Recommended to install
+" After install, turn shell ~/.vim/bundle/vimproc, (n,g)make -f your_machines_makefile
+NeoBundle 'Shougo/vimproc'
+
+NeoBundle 'git://github.com/Shougo/unite.vim'
+NeoBundle 'git://github.com/Shougo/neocomplcache'
+NeoBundle 'git://github.com/tpope/vim-surround'
+NeoBundle 'scrooloose/nerdcommenter'
 
 filetype plugin indent on     " required! 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -167,3 +175,11 @@ function! InsertTabWrapper()
 endfunction
 inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 
+"-------------------------------------------------------------------------------
+"" nerdcommenter
+"-------------------------------------------------------------------------------
+" コメントした後に挿入するスペースの数
+let NERDSpaceDelims = 1
+" キーマップの変更。<Leader>=\+cでコメント化と解除を行う。
+" コメントされていれば、コメントを外し、コメントされてなければコメント化する。
+vmap ./ <Plug>NERDCommenterToggle
