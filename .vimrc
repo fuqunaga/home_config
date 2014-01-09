@@ -1,12 +1,9 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " for Vundle
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set nocompatible               " be iMproved
-filetype off                   " required!
-
 if has('vim_starting')
-	set nocompatible               " Be iMproved
-	set runtimepath+=~/.vim/bundle/neobundle.vim/
+   set nocompatible               " Be iMproved
+   set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
 
 call neobundle#rc(expand('~/.vim/bundle/'))
@@ -176,4 +173,11 @@ function! InsertTabWrapper()
 endfunction
 inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 
-
+"-------------------------------------------------------------------------------
+"" nerdcommenter
+"-------------------------------------------------------------------------------
+" コメントした後に挿入するスペースの数
+let NERDSpaceDelims = 1
+" キーマップの変更。<Leader>=\+cでコメント化と解除を行う。
+" コメントされていれば、コメントを外し、コメントされてなければコメント化する。
+vmap ./ <Plug>NERDCommenterToggle
