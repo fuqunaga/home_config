@@ -1,5 +1,5 @@
 if has('gui_macvim')
-	" set transparency=10	" 透明度を指定
+	set transparency=10	" 透明度を指定
 	set antialias
 	set guioptions-=t	" ツールバー非表示
 	set guioptions-=r	" 右スクロールバー非表示
@@ -15,6 +15,8 @@ if has('gui_macvim')
 	" set fuoptions=maxvert,maxhorz
   	" autocmd GUIEnter * set fullscreen 
 	
-	colorscheme wombat256
+	syntax enable
+	set background=dark
+	colorscheme solarized
 endif
 
