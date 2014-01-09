@@ -65,8 +65,8 @@ set shiftwidth=4
 set clipboard=unnamed,autoselect
 
 " QuickFix
-noremap <F10> :cn<CR>
-noremap <F11> :cp<CR>
+noremap <C-n> :cn<CR>
+noremap <C-p> :cp<CR>
 
 " filetype
 au BufNewFile,BufRead *.as set filetype=actionscript
