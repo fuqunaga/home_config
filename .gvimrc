@@ -16,7 +16,8 @@ if has('gui_macvim')
   	" autocmd GUIEnter * set fullscreen 
 	
 	syntax enable
-	set background=dark
-	colorscheme solarized
+	"set background=dark
+	"colorscheme solarized
+	colorscheme hybrid
 endif
 

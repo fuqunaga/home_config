@@ -14,8 +14,10 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'vim-scripts/actionscript.vim--Leider'
-NeoBundle 'altercation/vim-colors-solarized'
+" NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'scrooloose/nerdcommenter'
+NeoBundle 'Align'
+NeoBundle 'w0ng/vim-hybrid'
 
 filetype plugin indent on     " required! 
 
