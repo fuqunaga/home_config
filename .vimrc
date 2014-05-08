@@ -11,6 +11,7 @@ call neobundle#rc(expand('~/.vim/bundle/'))
  " Let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'vim-scripts/actionscript.vim--Leider'
