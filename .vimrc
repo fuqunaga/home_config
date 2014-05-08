@@ -66,6 +66,8 @@ set shiftwidth=4
 
 set clipboard=unnamed,autoselect
 
+set undodir=$VIM/undo
+
 " QuickFix
 noremap <C-n> :cn<CR>
 noremap <C-p> :cp<CR>
