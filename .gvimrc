@@ -19,5 +19,7 @@ if has('gui_macvim')
 	"set background=dark
 	"colorscheme solarized
 	colorscheme hybrid
+
+	set autoread
 endif
 

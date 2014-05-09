@@ -13,20 +13,30 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/neocomplcache'
+NeoBundle 'Shougo/vimfiler'
 NeoBundle 'Shougo/vimproc', {
-      \ 'build' : {
-      \     'windows' : 'make -f make_mingw32.mak',
-      \     'cygwin' : 'make -f make_cygwin.mak',
-      \     'mac' : 'make -f make_mac.mak',
-      \     'unix' : 'make -f make_unix.mak',
-      \    },
-      \ }
+  \ 'build' : {
+    \ 'windows' : 'make -f make_mingw32.mak',
+    \ 'cygwin' : 'make -f make_cygwin.mak',
+    \ 'mac' : 'make -f make_mac.mak',
+    \ 'unix' : 'make -f make_unix.mak',
+  \ },
+\ }
 NeoBundle 'tpope/vim-surround'
 NeoBundle 'vim-scripts/actionscript.vim--Leider'
 " NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'scrooloose/nerdcommenter'
 NeoBundle 'Align'
+" NeoBundle 'vim-scripts/cg'
 NeoBundle 'w0ng/vim-hybrid'
+NeoBundleLazy 'nosami/Omnisharp', {
+\   'autoload': {'filetypes': ['cs']},
+\   'build': {
+\     'mac': 'xbuild server/OmniSharp.sln',
+\     'unix': 'xbuild server/OmniSharp.sln',
+\   }
+\ }
+NeoBundle 'othree/eregex.vim'
 
 filetype plugin indent on     " required! 
 
@@ -55,9 +65,8 @@ function! s:unite_my_settings()
   imap <silent><buffer> <ESC><ESC> <ESC>q
 endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" neocomplcache
 let g:neocomplcache_enable_at_startup = 1 " 起動時に有効化
-
+let g:vimfiler_as_default_explorer = 1
 
 " 行番号表示
 set nu
@@ -196,3 +205,78 @@ let NERDSpaceDelims = 1
 " キーマップの変更。<Leader>=\+cでコメント化と解除を行う。
 " コメントされていれば、コメントを外し、コメントされてなければコメント化する。
 vmap ./ <Plug>NERDCommenterToggle
+
+"-------------------------------------------------------------------------------
+" OmniSharp
+"-------------------------------------------------------------------------------
+"Set the type lookup function to use the preview window instead of the status line
+"let g:OmniSharp_typeLookupInPreview = 1
+
+"howmatch significantly slows down omnicomplete
+"hen the first match contains parentheses.
+set noshowmatch
+"Set autocomplete function to OmniSharp (if not using YouCompleteMe completion plugin)
+autocmd FileType cs setlocal omnifunc=OmniSharp#Complete
+
+"Super tab settings
+"let g:SuperTabDefaultCompletionType = 'context'
+"let g:SuperTabContextDefaultCompletionType = "<c-x><c-o>"
+"let g:SuperTabDefaultCompletionTypeDiscovery = ["&omnifunc:<c-x><c-o>","&completefunc:<c-x><c-n>"]
+"let g:SuperTabClosePreviewOnPopupClose = 1
+
+"don't autoselect first item in omnicomplete, show if only one item (for preview)
+"remove preview if you don't want to see documentation
+set completeopt=longest,menuone,preview
+"move the preview window (code documentation) to the bottom of the screen, so it doesn't move the code!
+set splitbelow
+
+nnoremap <F5> :wa!<cr>:OmniSharpBuild<cr>
+" Builds can run asynchronously with vim-dispatch installed
+"nnoremap <F5> :wa!<cr>:OmniSharpBuildAsync<cr>
+
+"The following commands are contextual, based on the current cursor position.
+
+"nnoremap <F12> :OmniSharpGotoDefinition<cr>
+nnoremap gd :OmniSharpGotoDefinition<cr>
+nnoremap <leader>fi :OmniSharpFindImplementations<cr>
+nnoremap <leader>ft :OmniSharpFindType<cr>
+nnoremap <leader>fs :OmniSharpFindSymbol<cr>
+nnoremap fu :OmniSharpFindUsages<cr>
+"nnoremap <leader>fu :OmniSharpFindUsages<cr>
+nnoremap <leader>fm :OmniSharpFindMembersInBuffer<cr>
+nnoremap tt :OmniSharpTypeLookup<cr>
+"nnoremap <leader>tt :OmniSharpTypeLookup<cr>
+nnoremap <leader>dc :OmniSharpDocumentation<cr>
+"show type information automatically when the cursor stops moving
+"autocmd CursorHold *.cs call OmniSharp#TypeLookupWithoutDocumentation()
+"set updatetime=300
+"set cmdheight=2
+"I find contextual code actions so useful that I have it mapped to the spacebar
+nnoremap <space> :OmniSharpGetCodeActions<cr>
+
+" rename with dialog
+nnoremap <leader>nm :OmniSharpRename<cr>
+" nnoremap <F2> :OmniSharpRename<cr>      
+" rename without dialog - with cursor on the symbol to rename... ':Rename newname'
+command! -nargs=1 Rename :call OmniSharp#RenameTo("<args>")
+
+" Force OmniSharp to reload the solution. Useful when switching branches etc.
+nnoremap <leader>rl :OmniSharpReloadSolution<cr>
+nnoremap <leader>cf :OmniSharpCodeFormat<cr>
+" Load the current .cs file to the nearest project
+nnoremap <leader>tp :OmniSharpAddToProject<cr>
+" Automatically add new cs files to the nearest project on save
+autocmd BufWritePost *.cs call OmniSharp#AddToProject()
+" (Experimental - uses vim-dispatch or vimproc plugin) - Start the omnisharp server for the current solution
+nnoremap <leader>ss :OmniSharpStartServer<cr>
+nnoremap <leader>sp :OmniSharpStopServer<cr>
+
+" Add syntax highlighting for types and interfaces
+nnoremap <leader>th :OmniSharpHighlightTypes<cr>
+"Don't ask to save when changing buffers (i.e. when jumping to a type definition)
+" set hidden
+
+if !exists('g:neocomplcache_force_omni_patterns')
+  let g:neocomplcache_force_omni_patterns = {}
+endif
+let g:neocomplcache_force_omni_patterns.cs = '[^.]\.\%(\u\{2,}\)\?'
