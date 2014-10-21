@@ -1,12 +1,12 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" for Vundle
+" for NeoBundle
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has('vim_starting')
    set nocompatible               " Be iMproved
    set runtimepath+=$VIM/bundle/neobundle.vim/
 endif
 
-call neobundle#rc(expand('$VIM/bundle/'))
+call neobundle#begin(expand('$VIM/bundle/'))
 
  " Let NeoBundle manage NeoBundle
 NeoBundleFetch 'Shougo/neobundle.vim'
@@ -36,11 +36,20 @@ NeoBundle 'w0ng/vim-hybrid'
 "\     'unix': 'xbuild server/OmniSharp.sln',
 "\   }
 "\ }
+NeoBundle 'thinca/vim-singleton'
+NeoBundle 'beyondmarc/hlsl.vim'
+
+call neobundle#end()
 
 filetype plugin indent on     " required! 
 
 NeoBundleCheck
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""" vim-singleton
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+call singleton#enable()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 """ Unite.vim
@@ -90,6 +99,7 @@ noremap <C-p> :cp<CR>
 
 " filetype
 au BufNewFile,BufRead *.as set filetype=actionscript
+au BufNewFile,BufRead *.compute,*.shader set filetype=hlsl
 
 
 " for Xcode
