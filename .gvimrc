@@ -10,8 +10,10 @@ if has('gui_macvim')
 endif
 
 
-set transparency=240	" 透明度を指定
-set imdisable		" IMを無効化
+" set transparency=220	" 透明度を指定
+autocmd FocusGained * set transparency=240
+autocmd FocusLost * set transparency=200
+" set imdisable		" IMを無効化
 
 "フルスクリーンモード	
 " set fuoptions=maxvert,maxhorz
